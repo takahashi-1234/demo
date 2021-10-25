@@ -6,9 +6,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    task=Task.new(task_params)
-    task.save
-    redirect_back(fallback_location:tasks_path)
+    @task=current_user.tasks.new(task_params)
+    if @task.save
+      TaskMailer.creation_email(@task).deliver_now
+      redirect_back(fallback_location:tasks_path)
+    end
   end
 
   private
