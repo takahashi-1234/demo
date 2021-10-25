@@ -1,0 +1,41 @@
+<div class="container">
+  <h1 class="my-3">Tasks#index</h1>
+  <div class="row">
+    <div class="col-lg-5">
+      <%= form_with model:@task,local:true do |f| %>
+      <%= f.label:内容 %>
+      <%= f.text_area:body,class:"form-control" %>
+      <%= f.label:重要度 %>
+      <%= f.select:importance,[["高","高い"],["中","中位"],["低","低い"]],include_blank:"選択してください" %><br>
+      <%= f.submit "登録",class:"btn btn-primary" %>
+      <% end %>
+    </div>
+
+    <div class="col-lg-7">
+      <%= search_form_for @q do |f| %>
+      <%= f.search_field:body_cont %>
+      <%= f.radio_button:importance_eq,"高" %>高
+      <%= f.radio_button:importance_eq,"中" %>中
+      <%= f.radio_button:importance_eq,"低" %>低
+      <%= f.submit "検索"%>
+      <% end %>
+
+      <table class="table table-hover">
+        <thead>
+          <td>内容</td>
+          <td><%= sort_link(@q, :importance) %></td>
+          <td>作成日</td>
+        </thead>
+        <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.body %></td>
+          <td><%= task.importance %></td>
+          <td><%= task.created_at.strftime("%Y/%m/%d") %></td>
+        </tr>
+        <% end %>
+      </table>
+      <%= paginate @tasks %>
+    </div>
+  </div>
+</div>
+
