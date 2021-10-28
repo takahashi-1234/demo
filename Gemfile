@@ -67,3 +67,6 @@ gem 'ransack'
 gem 'kaminari'
 
 gem 'devise'
+
+gem 'chart-js-rails','~>0.1.4'
+gem 'gon', '~> 6.2.0'

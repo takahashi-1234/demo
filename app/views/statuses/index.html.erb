@@ -1,0 +1,19 @@
+<%= link_to "back",:back %>
+<%= search_form_for @q do |f| %>
+<%= f.search_field:body_cont %>
+<%= f.search_field:importance_eq %>
+<% end %>
+<table class="table">
+  <thead>
+    <th>内容</th>
+    <th><%= sort_link(@q,:importance)%></th>
+    <th>登録日</th>
+  </thead>
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.body %></td>
+    <td><%= task.importance %></td>
+    <td><%= task.created_at.strftime("%Y/%m/%d") %></td>
+  </tr>
+  <% end %>
+</table>

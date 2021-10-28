@@ -25,13 +25,19 @@
           <td>内容</td>
           <td><%= sort_link(@q, :importance) %></td>
           <td>作成日</td>
+          <td><%=link_to "完了したタスク", finished_tasks_path %></td>
         </thead>
         <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.body %></td>
-          <td><%= task.importance %></td>
-          <td><%= task.created_at.strftime("%Y/%m/%d") %></td>
-        </tr>
+          <% if task.statuses.blank? %>
+          <tr>
+            <td><%= task.body %></td>
+            <td><%= task.importance %></td>
+            <td><%= task.created_at.strftime("%Y/%m/%d") %></td>
+            <td>
+              <%= link_to "未完了", task_statuses_path(task.id),method: :post,class:"btn btn-primary" %>
+            </td>
+          </tr>
+          <% end %>
         <% end %>
       </table>
       <%= paginate @tasks %>
@@ -39,3 +45,6 @@
   </div>
 </div>
 
+<h1 class="text-center">週ごとの投稿数</h1>
+<canvas id="myChart" width="200" height="200"></canvas>
+<script>draw_graph();</script>
